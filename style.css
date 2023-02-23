@@ -1,0 +1,97 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: monospace;
+}
+
+.navbar {
+    background-color: rgba(88, 83, 83, 0.654);
+    color: whitesmoke;
+    padding: 25px 60px;
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 50px;
+}
+
+.cart {
+    background-color: whitesmoke;
+    color: black;
+    padding: 5px;
+    font-size: 30px;
+    border-radius: 5px;
+    position: relative;
+}
+
+.cartAmount {
+    position: absolute;
+    top: -22px;
+    right: -10px;
+    background-color: red;
+    color: whitesmoke;
+    border-radius: 3px;
+    font-size: 1.3rem;
+    padding: 2px 4px;
+    margin-top: 4px;
+}
+
+.shop {
+    display: grid;
+    grid-template-columns: repeat(4, 225px);
+    gap: 30px;
+    justify-content: center;
+}
+
+@media (max-width: 1000px) {
+    .shop {
+        grid-template-columns: repeat(2, 225px);
+    }
+}
+
+@media (max-width: 500px) {
+    .shop {
+        grid-template-columns: repeat(1, 225px);
+    }
+}
+
+.item {
+    border: 2px solid black;
+    border-radius: 5px;
+}
+
+.item img {
+    width: 223px;
+    height: 300px;
+    object-fit: cover;
+}
+
+.details {
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 5px;
+}
+
+.price-quantity {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.buttons {
+    display: flex;
+    gap: 8px;
+}
+
+.bi-dash-lg {
+    color: red;
+}
+
+.bi-plus-lg {
+    color: green;
+}
+
