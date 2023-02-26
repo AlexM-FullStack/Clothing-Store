@@ -32,11 +32,15 @@ let shopItemsData = [{
 
 }];
 
-let basket = []
+//retrieve data from locals storage, if no local storage available just retrieve empty array
+let basket = JSON.parse(localStorage.getItem('data')) || []
 
 function generateShop() {
     return (shopEl.innerHTML = shopItemsData.map(object => {
         let {id, name, price, description, img} = object
+
+        //search for ids in local storage, if they exist retrieve if not do nothing
+        let search = basket.find(product => product.id === id) || []
         return `
             <div id="product-id-${id}" class="item">
                 <img src='${img}'>
@@ -47,7 +51,7 @@ function generateShop() {
                         <h3>$ ${price}</h3>
                         <div class="buttons">
                             <i onclick="decrement(${id})" class="bi bi-dash-lg"></i>
-                            <div id="${id}" class="quantity">0</div>
+                            <div id="${id}" class="quantity">${search.item === undefined? 0: search.item}</div>
                             <i onclick="increment(${id})" class="bi bi-plus-lg"></i>
                         </div>
                     </div>
@@ -75,6 +79,10 @@ let increment = id => {
         searchBasket.item ++
     }
     
+    //save items added to basket in local storage
+    localStorage.setItem('data', JSON.stringify(basket))
+
+
     //update func is run every time + btn clicked
     update(selectedItem.id)
 }
@@ -88,6 +96,9 @@ let decrement = id => {
     else {
         searchBasket.item --
     }
+
+    //save total items in basket in local storage
+    localStorage.setItem('data', JSON.stringify(basket))
     //update func is run every time - btn clicked
     update(selectedItem.id)
 }
@@ -106,10 +117,9 @@ let calculateCartTotal = () => {
     let cartIcon = document.getElementById('cartAmount')
     //add all item quantity with .map().reduce()
     cartIcon.innerHTML = basket.map(product => product.item).reduce((x,y) => x + y, 0)
-    
-
 }
 
+calculateCartTotal()
 
 
 
