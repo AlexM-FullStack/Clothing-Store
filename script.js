@@ -38,7 +38,7 @@ function generateShop() {
     return (shopEl.innerHTML = shopItemsData.map(object => {
         let {id, name, price, description, img} = object
         return `
-            <div class="item">
+            <div id="product-id-${id}" class="item">
                 <img src='${img}'>
                 <div class="details">
                     <h3>${name}</h3>
@@ -61,17 +61,21 @@ generateShop()
 
 let increment = id => {
     let selectedItem = id
+    
     let searchBasket = basket.find(product => product.id === selectedItem.id)
 
+    //search func responsible for finding the product, if product not found it is pushed in the basket
     if(searchBasket === undefined) {
         basket.push({
             id: selectedItem.id,
             item: 1
         })
+    //if product is found only its quantity is increased
     } else {
         searchBasket.item ++
     }
     
+    //update func is run every time + btn clicked
     update(selectedItem.id)
 }
 
@@ -79,24 +83,28 @@ let decrement = id => {
     let selectedItem = id
     let searchBasket = basket.find(product => product.id === selectedItem.id)
 
+    //stop decreasing product quantity below 0, decrement func stops at 0
     if(searchBasket.item === 0) return
     else {
         searchBasket.item --
     }
-
+    //update func is run every time - btn clicked
     update(selectedItem.id)
 }
 
 let update = (id) => {
     let search = basket.find(product => product.id === id)
     
+    //if id is found product quantity is changed (updated) inside div 
     document.getElementById(id).innerHTML = search.item
+    //calculate cart total only when update func is triggered
     calculateCartTotal()
 }
 
 //runs when update() is triggered
 let calculateCartTotal = () => {
     let cartIcon = document.getElementById('cartAmount')
+    //add all item quantity with .map().reduce()
     cartIcon.innerHTML = basket.map(product => product.item).reduce((x,y) => x + y, 0)
     
 
